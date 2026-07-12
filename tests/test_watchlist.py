@@ -8,7 +8,7 @@ from services.collection_service import FilmNotFoundError
 import pytest
 from app import create_app, db
 from models import User, Film, WatchlistEntry
-from services.watchlist_service import add_to_watchlist
+from services.watchlist_service import add_to_watchlist, remove_from_watchlist, NotInWatchlistError
 
 @pytest.fixture
 def app():
@@ -53,4 +53,17 @@ def test_add_to_watchlist_nonexistent_film_raises(app, sample_user):
 
         with pytest.raises(FilmNotFoundError):
             add_to_watchlist(user_id=sample_user, film_id=fake_film_id)
+
+
+# ── Remove from watchlist ──────────────────────────────────────────────────────────
+
+def test_remove_from_watchlist_not_found_raises(app, sample_user, sample_film):
+    """
+    Attempting to remove a film that is not in the user's watchlist
+    should raise NotInWatchlistError.
+    """
+    with app.app_context():
+        # The film exists, but the user hasn't added it to their watchlist
+        with pytest.raises(NotInWatchlistError):
+            remove_from_watchlist(user_id=sample_user, film_id=sample_film)
 
