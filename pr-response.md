@@ -46,6 +46,11 @@ I resolved the `.gitignore` conflict manually. To fix `models.py`, I recreated t
 **How I verified no conflict remains:**
 I ran `pytest tests/` to verify that the application properly handles adding to the watchlist with the new string-based UUIDs, and all 5 tests passed successfully.
 
+## Stretch Features
+**remove_from_watchlist():** Added `remove_from_watchlist(user_id, film_id)` to `watchlist_service.py` along with a custom `NotInWatchlistError`. Created a corresponding `DELETE` route at `/watchlist/<user_id>/remove`.
+**Visibility Toggle Endpoint:** Modified `add_to_watchlist` to accept a `public` parameter (defaulting to True) and updated the `POST /watchlist/<user_id>/add` route to parse the `public` flag from the JSON request body.
+**Second Test:** Added `test_remove_from_watchlist_not_found_raises` to `test_watchlist.py` to verify that attempting to remove a film the user hasn't added properly raises `NotInWatchlistError`. I chose this edge case because it perfectly complements the `remove_from_watchlist` stretch feature and follows the error-handling pattern of the other test.
+
 ## Git Log Screenshot
 
 ![Git log](./image.png)
