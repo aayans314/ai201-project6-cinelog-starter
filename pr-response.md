@@ -39,8 +39,11 @@ I agree with the reviewer wanting to make it default to recent sort. We can add 
 
 ## Comment 6 — Rebase
 **What conflicted:**
+There was an explicit merge conflict in `.gitignore`. There was also a silent conflict where `WatchlistEntry` disappeared from `models.py` because the `main` branch deleted it when refactoring `film.id` from an integer to a UUID.
 **How I resolved it:**
+I resolved the `.gitignore` conflict manually. To fix `models.py`, I recreated the `WatchlistEntry` class but updated `film_id` to use `db.String(36)` instead of `db.Integer` to match the new UUID refactor. I also updated the type hint in the `watchlist_service.py` docstring.
 **How I verified no conflict remains:**
+I ran `pytest tests/` to verify that the application properly handles adding to the watchlist with the new string-based UUIDs, and all 5 tests passed successfully.
 
 ## PR Description
 <!-- Written at the end — feature overview, design decisions, manual testing steps -->
