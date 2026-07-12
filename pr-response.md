@@ -31,6 +31,7 @@ I ran the full test suite to ensure that the code still compiles and that the wa
 **Tradeoff acknowledged:** 
 It might be a little bit oversharing but I think it's worth it for the social aspect of our app. I acknowledge that defaulting to public risks exposing sensitive choices for users who assume the list is private. To mitigate this, we need to ensure the UI makes it explicitly clear (e.g., a visible 'Public' badge) when adding a film that this action is visible to others.
 
+
 ## Comment 5 — Sort order
 **My position:** I agree with the reviewer that the films should be sorted by date added, not by title.
 **Reasoning:** It makes more sense from a user experience perspective to see the most recently added films at the top of the list, as these are the films that the user is most likely to be interested in. Apart from that it is a nice way to see what films that users feel more interested in watching chronologically, which might compliment their life events or time periods.
@@ -44,6 +45,10 @@ There was an explicit merge conflict in `.gitignore`. There was also a silent co
 I resolved the `.gitignore` conflict manually. To fix `models.py`, I recreated the `WatchlistEntry` class but updated `film_id` to use `db.String(36)` instead of `db.Integer` to match the new UUID refactor. I also updated the type hint in the `watchlist_service.py` docstring.
 **How I verified no conflict remains:**
 I ran `pytest tests/` to verify that the application properly handles adding to the watchlist with the new string-based UUIDs, and all 5 tests passed successfully.
+
+## Git Log Screenshot
+
+![Git log](./image.png)
 
 ## PR Description
 
