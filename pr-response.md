@@ -58,16 +58,22 @@ I ran `pytest tests/` to verify that the application properly handles adding to 
 ## PR Description
 
 **Feature Overview:**
-This PR introduces the new Watchlist feature to CineLog. Users can now save films they want to watch later by adding them to their personal watchlist. The feature includes a new `WatchlistEntry` database model and API endpoints for adding to and retrieving the watchlist.
+This PR introduces the new Watchlist feature to CineLog. Users can now save films they want to watch later by adding them to their personal watchlist. The feature includes a new `WatchlistEntry` database model, an endpoint to retrieve the watchlist, a `POST` endpoint to add films (with an optional `public` visibility toggle), and a `DELETE` endpoint to remove films.
 
 **Design Decisions:**
 - **Default Visibility:** Watchlists are public by default to align with the social, sharing-oriented nature of the app. A visible UI badge is recommended to ensure users are aware of this.
 - **Sort Order:** Watchlists are sorted by 'date added' (newest first) to prioritize the films a user is most currently interested in, rather than alphabetical order.
 - **Deduplication:** Added logic to prevent users from adding the same film to their watchlist multiple times.
 
-**Manual Testing Steps:**
-1. Run the application locally with `flask run` or `python app.py`.
-2. Use an API testing tool (like Postman or curl) to send a `POST` request to `/watchlist/<user_id>/add` with a JSON body containing `{"film_id": "<uuid>"}`.
-3. Verify the response is `201 Created`.
-4. Try to send the exact same `POST` request again and verify it returns a `400 Bad Request` (or similar error) due to deduplication.
-5. Send a `GET` request to `/watchlist/<user_id>` and verify the added film appears in the response list, sorted correctly and displaying the `public: true` flag.
+**Testing Steps:**
+1. Ensure your virtual environment is active and dependencies are installed.
+2. Run the specific automated test suite for the watchlist feature:
+   ```bash
+   pytest tests/test_watchlist.py -v
+   ```
+3. Verify that all edge-case tests pass, including duplicate handling and attempting to remove a nonexistent film.
+4. To verify the entire application remains stable, run the full test suite:
+   ```bash
+   pytest tests/ -v
+   ```
+5. All 6 tests should return a `PASSED` status.
